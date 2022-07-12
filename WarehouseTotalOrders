@@ -2,7 +2,11 @@
 
 SELECT
 wrh.warehouse_alias AS name,
-COUNT(*) AS number_of_orders
+COUNT(*) AS number_of_orders,
+CASE 
+WHEN COUNT(*) < 1000 THEN 'limited no. orders'
+WHEN COUNT(*) >= 1000 THEN 'significant no. orders'
+END AS order_appropriation
 FROM 
 theta-sunlight-355515.warehouse.wrh AS wrh
 JOIN
