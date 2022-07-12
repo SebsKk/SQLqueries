@@ -1,0 +1,19 @@
+--- from bigquery-public-data.new_york_citibike.citibike_trips
+--- the query counts number of subscriber and one off customers that used bikes from each station
+
+SELECT
+COUNT(CASE 
+WHEN trips.usertype = 'Subscriber' THEN 'Subscriber'END)
+ AS Subscribers,
+count(CASE 
+WHEN 
+trips.usertype != 'Subscriber' AND trips.usertype is not NULL THEN 'One-off customer'
+END) AS One_offs,
+stations.name
+FROM 
+bigquery-public-data.new_york_citibike.citibike_trips AS trips 
+JOIN bigquery-public-data.new_york_citibike.citibike_stations AS stations
+ON 
+stations.name = trips.start_station_name
+GROUP BY 3
+ 
