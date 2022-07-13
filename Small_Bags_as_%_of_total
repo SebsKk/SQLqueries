@@ -1,0 +1,15 @@
+--- query relating to a dataset from Kaggle https://www.kaggle.com/datasets/neuromusic/avocado-prices?resource=download
+
+SELECT 
+SUM(av.Small_Bags + av.Large_bags + av.XLarge_bags) AS total_check,
+SUM(Total_Bags) AS original_total,
+av.Date,
+ROUND(SUM(av.Small_bags)/SUM(Total_Bags),2)*100 AS small_bags_as_total_perc
+FROM 
+avo.avos as av
+WHERE 
+av.Total_bags > 0
+GROUP BY 
+3
+ORDER BY 
+3 DESC
