@@ -1,0 +1,19 @@
+--- most often used bike in Austin based on the austin_bikeshare dataset in BigQuery
+
+WITH most_used_bike AS (
+  SELECT 
+  bikeid, COUNT(bikeid) AS number_of_occ
+  FROM 
+  bigquery-public-data.austin_bikeshare.bikeshare_trips
+  GROUP BY 1
+  ORDER BY 2 DESC
+  LIMIT 1
+)
+
+SELECT start_station_name,
+COUNT(bikeid) AS bikeid_count
+FROM 
+  bigquery-public-data.austin_bikeshare.bikeshare_trips
+WHERE bikeid = (SELECT bikeid FROM most_used_bike)
+  GROUP BY 1
+  ORDER BY 2 DESC 
